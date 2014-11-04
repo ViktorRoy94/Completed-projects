@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WindowsFormsApplication1", "WindowsFormsApplication1\WindowsFormsApplication1.vcxproj", "{E4377D8C-E988-4DC8-A7F4-6581757F30CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4377D8C-E988-4DC8-A7F4-6581757F30CD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E4377D8C-E988-4DC8-A7F4-6581757F30CD}.Debug|Win32.Build.0 = Debug|Win32
+		{E4377D8C-E988-4DC8-A7F4-6581757F30CD}.Release|Win32.ActiveCfg = Release|Win32
+		{E4377D8C-E988-4DC8-A7F4-6581757F30CD}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

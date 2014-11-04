@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "implicit_difference_scheme", "implicit_difference_scheme\implicit_difference_scheme.vcxproj", "{B61976B3-0758-4FD6-ADA2-31640939A309}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B61976B3-0758-4FD6-ADA2-31640939A309}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B61976B3-0758-4FD6-ADA2-31640939A309}.Debug|Win32.Build.0 = Debug|Win32
+		{B61976B3-0758-4FD6-ADA2-31640939A309}.Release|Win32.ActiveCfg = Release|Win32
+		{B61976B3-0758-4FD6-ADA2-31640939A309}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
