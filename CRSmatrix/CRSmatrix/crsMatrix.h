@@ -40,15 +40,65 @@ public:
 		return b;
 	}
 	
-/*	void printMatrix ()
-	{
-		for ( int i=0; i<N; i++)
-		{
-			for (int j=rowIndex[i]; j<rowIndex[i+1]; j++)
-				b[i] +=value[j] * x[col[j]];
-		}
-	}*/
 
+	void printMatrix ()
+	{
+		for (int i = 0; i < N; i++) {
+			for (int k = rowIndex[i]; k < rowIndex[i + 1]; k++) {
+
+				if (k == rowIndex[i]) {
+					for (int j = 0; j < col[k]; j++){
+						printf("0.00 ");
+					}
+				}
+
+				printf("%.2lf ", value[k]);
+
+				for (int j = col[k]+1; j < col[k+1]; j++) {
+					printf("0.00 ");
+				}
+
+				if (k == rowIndex[i+1]-1) {
+					for (int j = col[k]; j < N-1; j++){
+						printf("0.00 ");
+					}
+				}
+			}
+			printf("\n");
+		}
+	}
+
+	void printMatrixToFile()
+	{
+		FILE* output;
+		fopen_s(&output, "output.txt", "w");
+		for (int i = 0; i < N; i++)
+		{
+			for (int k = rowIndex[i]; k < rowIndex[i + 1]; k++)
+			{
+
+				if (k == rowIndex[i]) {
+					for (int j = 0; j < col[k]; j++){
+						fprintf(output, "0.00 ");
+					}
+				}
+
+				fprintf(output, "%.2lf ", value[k]);
+
+				for (int j = col[k] + 1; j < col[k + 1]; j++) {
+					fprintf(output, "0.00 ");
+				}
+
+				if (k == rowIndex[i + 1] - 1) {
+					for (int j = col[k]; j < N - 1; j++){
+						fprintf(output, "0.00 ");
+					}
+				}
+			}
+			fprintf(output, "\n");
+		}
+
+	}
 
 	~crsMatrix()
 	{
