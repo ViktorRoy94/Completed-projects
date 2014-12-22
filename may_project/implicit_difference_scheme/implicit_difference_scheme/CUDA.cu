@@ -4,41 +4,41 @@
 
 __device__ int flag;														
 
- __global__ void methodJacobi(double* value, int* col, int* rowIndex, double* x1, double* x2, double *b, double eps, double diag, int N, int *iteration, double dt, double *f) // eps - точность вычислений, до которых выполняет метод
+ __global__ void methodJacobi(double* value, int* col, int* rowIndex, double* x1, double* x2, double *b, double eps, double diag, int N, int *iteration, double dt, double *f) // eps - ГІГ®Г·Г­Г®Г±ГІГј ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГ©, Г¤Г® ГЄГ®ГІГ®Г°Г»Гµ ГўГ»ГЇГ®Г«Г­ГїГҐГІ Г¬ГҐГІГ®Г¤
 	{
 		double *tmp;
-		int iter = 0;														// к-во итераций в каждом потоке
-		int index; 															// индекс потока
+		int iter = 0;														// ГЄ-ГўГ® ГЁГІГҐГ°Г Г¶ГЁГ© Гў ГЄГ Г¦Г¤Г®Г¬ ГЇГ®ГІГ®ГЄГҐ
+		int index; 															// ГЁГ­Г¤ГҐГЄГ± ГЇГ®ГІГ®ГЄГ 
 		do{
-			index = threadIdx.x + blockIdx.x * blockDim.x;					// threadIdx.x - номер потока, blockIdx.x - блока
-			if( index == 0 ){												// нулевой поток устанавливает flag в 0
+			index = threadIdx.x + blockIdx.x * blockDim.x;					// threadIdx.x - Г­Г®Г¬ГҐГ° ГЇГ®ГІГ®ГЄГ , blockIdx.x - ГЎГ«Г®ГЄГ 
+			if( index == 0 ){												// Г­ГіГ«ГҐГўГ®Г© ГЇГ®ГІГ®ГЄ ГіГ±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГІ flag Гў 0
 				flag = 0;
 			}
 			__syncthreads();
 			while (index < N)
 			{
 				x2[index] = 0;
-				for (int j=rowIndex[index]; j<rowIndex[index+1]; j++)		// умножение crs матрицы на вектор
+				for (int j=rowIndex[index]; j<rowIndex[index+1]; j++)		// ГіГ¬Г­Г®Г¦ГҐГ­ГЁГҐ crs Г¬Г ГІГ°ГЁГ¶Г» Г­Г  ГўГҐГЄГІГ®Г°
 					x2[index] +=value[j] * x1[col[j]];				
-				x2[index] =  x1[index] + ( -x2[index] + b[index] ) / diag;  // рассчет следующего значения на основе предыдущего
+				x2[index] =  x1[index] + ( -x2[index] + b[index] ) / diag;  // Г°Г Г±Г±Г·ГҐГІ Г±Г«ГҐГ¤ГіГѕГ№ГҐГЈГ® Г§Г­Г Г·ГҐГ­ГЁГї Г­Г  Г®Г±Г­Г®ГўГҐ ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГҐГЈГ®
 				
 				if (fabs(x1[index]-x2[index]) > eps){
 					flag = index+1;  
 				}
-			 	index += blockDim.x * gridDim.x;						 // gridDim.x - размер сетки в блоках, blockDim.x - размеры блока в потоках
+			 	index += blockDim.x * gridDim.x;						 // gridDim.x - Г°Г Г§Г¬ГҐГ° Г±ГҐГІГЄГЁ Гў ГЎГ«Г®ГЄГ Гµ, blockDim.x - Г°Г Г§Г¬ГҐГ°Г» ГЎГ«Г®ГЄГ  Гў ГЇГ®ГІГ®ГЄГ Гµ
 			 }
 			tmp = x1;													//			
-			x1 = x2;													// меняем предыдущия и следующие значения местами
+			x1 = x2;													// Г¬ГҐГ­ГїГҐГ¬ ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГЁГї ГЁ Г±Г«ГҐГ¤ГіГѕГ№ГЁГҐ Г§Г­Г Г·ГҐГ­ГЁГї Г¬ГҐГ±ГІГ Г¬ГЁ
 			x2 = tmp;													//
-			iter++;														// увеличиваем итерации		
+			iter++;														// ГіГўГҐГ«ГЁГ·ГЁГўГ ГҐГ¬ ГЁГІГҐГ°Г Г¶ГЁГЁ		
 			__syncthreads();
 
-		}while ( flag  );												// если кто-то записал во флаг -> выполняем дальше
+		}while ( flag  );												// ГҐГ±Г«ГЁ ГЄГІГ®-ГІГ® Г§Г ГЇГЁГ±Г Г« ГўГ® ГґГ«Г ГЈ -> ГўГ»ГЇГ®Г«Г­ГїГҐГ¬ Г¤Г Г«ГјГёГҐ
 		
-		index = threadIdx.x + blockIdx.x * blockDim.x;					// threadIdx.x - номер потока, blockIdx.x - блока
+		index = threadIdx.x + blockIdx.x * blockDim.x;					// threadIdx.x - Г­Г®Г¬ГҐГ° ГЇГ®ГІГ®ГЄГ , blockIdx.x - ГЎГ«Г®ГЄГ 
 		while (index < N){
 			b[index]=f[index]*dt+x1[index];
-			index += blockDim.x * gridDim.x;						 // gridDim.x - размер сетки в блоках, blockDim.x - размеры блока в потоках
+			index += blockDim.x * gridDim.x;						 // gridDim.x - Г°Г Г§Г¬ГҐГ° Г±ГҐГІГЄГЁ Гў ГЎГ«Г®ГЄГ Гµ, blockDim.x - Г°Г Г§Г¬ГҐГ°Г» ГЎГ«Г®ГЄГ  Гў ГЇГ®ГІГ®ГЄГ Гµ
 		}
 
 		if( threadIdx.x + blockIdx.x * blockDim.x == 0 ){

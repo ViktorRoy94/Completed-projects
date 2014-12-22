@@ -54,15 +54,18 @@ public:
 
 				printf("%.2lf ", value[k]);
 
-				for (int j = col[k]+1; j < col[k+1]; j++) {
-					printf("0.00 ");
-				}
-
 				if (k == rowIndex[i+1]-1) {
 					for (int j = col[k]; j < N-1; j++){
 						printf("0.00 ");
 					}
+                                        continue;
 				}
+
+				for (int j = col[k]+1; j < col[k+1]; j++) {
+					printf("0.00 ");
+				}
+
+
 			}
 			printf("\n");
 		}
@@ -85,15 +88,18 @@ public:
 
 				fprintf(output, "%.2lf ", value[k]);
 
-				for (int j = col[k] + 1; j < col[k + 1]; j++) {
+       				if (k == rowIndex[i + 1] - 1) {
+                                	for (int j = col[k]; j < N - 1; j++){
+						fprintf(output, "0.00 ");
+					}
+                                        continue;
+				}
+
+                                for (int j = col[k] + 1; j < col[k + 1]; j++) {
 					fprintf(output, "0.00 ");
 				}
 
-				if (k == rowIndex[i + 1] - 1) {
-					for (int j = col[k]; j < N - 1; j++){
-						fprintf(output, "0.00 ");
-					}
-				}
+
 			}
 			fprintf(output, "\n");
 		}

@@ -1,6 +1,6 @@
 #include <stdio.h> 
 #include <opencv2/opencv.hpp> 
- 
+#include "portable_time.h"
 using namespace cv; 
 
 void hist_create(Mat &histImage, Mat &image);
@@ -19,12 +19,12 @@ bool accumulat = false;
 int main(int argc, char* argv[]) 
 { 
   Mat image;
-  image = imread("image.jpg",0);
+  image = imread("image2.jpg",0);
   Mat histImage( hist_h, hist_w, CV_8UC3);
   Mat smoothed_hist;
   Mat smoothed_histImage( hist_h, hist_w, CV_8UC3);
   
-  int n = 100;
+  int n = 30;
   Mat bilInterpolation (2*image.rows-1, 2*image.cols-1, image.type());
   Mat bilInterpolation1((int)(n*image.rows), (int)(n*image.cols), image.type());
   Mat bicubInterpolation((int)(n*image.rows), (int)(n*image.cols), image.type());
@@ -34,20 +34,25 @@ int main(int argc, char* argv[])
   /*namedWindow("Image", CV_WINDOW_AUTOSIZE );
   imshow("Image", image);*/
 
-  namedWindow("Histogram", CV_WINDOW_AUTOSIZE );
-  imshow("Histogram", histImage );
+  //namedWindow("Histogram", CV_WINDOW_AUTOSIZE );
+  //imshow("Histogram", histImage );
+  //
+  //namedWindow("SmoothedHistogram", CV_WINDOW_AUTOSIZE );
+  //smoothed_hist_create(smoothed_hist, image, smoothed_histImage);
+  //imshow("SmoothedHistogram", smoothed_histImage );
   
-  namedWindow("SmoothedHistogram", CV_WINDOW_AUTOSIZE );
-  smoothed_hist_create(smoothed_hist, image, smoothed_histImage);
-  imshow("SmoothedHistogram", smoothed_histImage );
-
+  double time = PortableGetTime();
   bil_interpolation1(image, bilInterpolation1, n);
+  time = PortableGetTime() - time;
+  printf("time = %lf", time);
+
   namedWindow("Bilinear interpolation", CV_WINDOW_AUTOSIZE );
   imshow("Bilinear interpolation", bilInterpolation1);
   
-  bic_interpolation(image, bicubInterpolation, n);
+  
+  /*bic_interpolation(image, bicubInterpolation, n);
   namedWindow("Bicubinear interpolation", CV_WINDOW_AUTOSIZE );
-  imshow("Bicubinear interpolation", bicubInterpolation);
+  imshow("Bicubinear interpolation", bicubInterpolation);*/
 
   waitKey(0);
 
@@ -55,6 +60,7 @@ int main(int argc, char* argv[])
   histImage.release();
   smoothed_hist.release();
   bilInterpolation.release();
+  bilInterpolation1.release();
   return 0; 
 }   
 

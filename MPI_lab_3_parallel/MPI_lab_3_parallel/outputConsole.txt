@@ -1,0 +1,2 @@
+Process 0 successed bufB     
+Process 0 successed gather     
