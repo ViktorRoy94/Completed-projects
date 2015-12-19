@@ -4,11 +4,13 @@
 #include "portable_time.h"
 #include "printTestMatrix.h"
 #include "readTestMatrix.h"
+#include <iostream>
+using namespace std;
 
 int main (int argc, char *argv[])
 {
-	int n  = 10000000;				// n*n размер матрицы
-	int nzInString = 10000;		    // к-во ненулевых элементов в строке
+	int n  = 100000;				// n*n размер матрицы
+	int nzInString = 100;		    // к-во ненулевых элементов в строке
 	
 	if (argc > 1) 
 	{

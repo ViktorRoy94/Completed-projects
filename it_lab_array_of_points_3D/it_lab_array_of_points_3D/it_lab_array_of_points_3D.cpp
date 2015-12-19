@@ -12,12 +12,12 @@ int main(int argc, char* argv[])
 	omp_set_dynamic(0);
 	//omp_set_num_threads(4);
 	printf("number of threads: %d/n",omp_get_max_threads());
-	int n=300; 
+	int n=100; 
 	if (argc>1) n=atoi(argv[1]);
 	const int g=1;
 	const int _k=1;
 	const double dt=0.000001;
-	const int t=100;
+	const int t=10;
 	double* u=new double[n*n*n];// функция u(n)  
 	double* un=new double[n*n*n]; // функция u(n+1)
 	double* f=new double[n*n*n];
@@ -27,9 +27,9 @@ int main(int argc, char* argv[])
 	double up_f=4,down_f=0; // граница значений по u ф-ции f
 	double TIME;
 
-	FILE* fpx=fopen("C:\\Users\\R\\Documents\\Visual Studio 2012\\Projects\\It_lab_graphic_3D\\It_lab_graphic\\array_of_points_x.txt","w+");
-	FILE* fpy=fopen("C:\\Users\\R\\Documents\\Visual Studio 2012\\Projects\\It_lab_graphic_3D\\It_lab_graphic\\array_of_points_y.txt","w+");
-	FILE* fpz=fopen("C:\\Users\\R\\Documents\\Visual Studio 2012\\Projects\\It_lab_graphic_3D\\It_lab_graphic\\array_of_points_z.txt","w+");
+	FILE* fpx=fopen("d:\\array_of_points_x.txt","w+");
+	FILE* fpy=fopen("d:\\array_of_points_y.txt","w+");
+	FILE* fpz=fopen("d:\\array_of_points_z.txt","w+");
 	fprintf(fpx,"%d %f %f\n",n,down_xyz,up_xyz);
 	fprintf(fpy,"%d %f %f\n",n,down_xyz,up_xyz);
 	fprintf(fpz,"%d %f %f\n",n,down_xyz,up_xyz);
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 		
 				if ((i*h<5) && (j*h<5) && (k*h<5))
 					u[i*n*n+j*n+k]=sin(minePI*i*h/5)+sin(minePI*j*h/5)+sin(minePI*k*h/5); // поправить 3.14. более точно
-	\			else u[i*n*n+j*n+k]=0;
+				else u[i*n*n+j*n+k]=0;
 			
 				if ((i*h>=5) && (i*h<=5.2) && (j*h>=5) && (j*h<=5.2) && (k*h>=5) && (k*h<=5.2))
 					f[i*n*n+j*n+k]=up_f;
@@ -84,6 +84,16 @@ int main(int argc, char* argv[])
 		tmp=u;   //
 		u=un;	 // меняем u(n+1) и u(n) местами
 		un=tmp;  //
+
+		for(int i=1;i<n-1;i++)
+			fprintf(fpx,"%lf ",un[i*n*n+49*n+49]);				
+		for(int j=1;j<n-1;j++)
+			fprintf(fpy,"%lf ",un[49*n*n+j*n+49]);				
+		for(int k=1;k<n-1;k++)
+			fprintf(fpz,"%lf ",un[49*n*n+49*n+k]);				
+		fprintf(fpx,"\n"); // переводим указатель на новую строчкку
+		fprintf(fpy,"\n"); // переводим указатель на новую строчкку
+		fprintf(fpz,"\n"); // переводим указатель на новую строчкку
 	}
 
 	for(int i=1;i<n-1;i++)
@@ -106,5 +116,6 @@ int main(int argc, char* argv[])
 	system("PAUSE");
 	delete [] un;
 	delete [] u;
+	delete [] f;
 	return 0;
 }

@@ -249,4 +249,9 @@ void setRandomMatrix1 (double *value, int *col, int *rowIndex, int n, int nzInSt
 			}
 		}
 	}
+	FILE* outputrow;
+	fopen_s(&outputrow, "outputcol.txt", "w");
+	for (int i = 0; i < n; i++) {
+		fprintf(outputrow, "row[%d] = %d\n", i, col[i]);
+	}
 }

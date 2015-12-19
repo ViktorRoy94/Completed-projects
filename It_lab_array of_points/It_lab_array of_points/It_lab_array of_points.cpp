@@ -5,7 +5,7 @@
 
 int main(void)
 {
-	const int n=100; 
+	const int n=10; 
 	const int g=1;
 	const int k=1;
 	const double dt=0.001;
@@ -21,8 +21,8 @@ int main(void)
 	double time;
 
 	FILE* fp1=fopen("array_of_points.txt","w");
-	fprintf(fp1,"%d %f %f\n",t,a,b);
-	fprintf(fp1,"%f %f\n",y2,y1);
+	/*fprintf(fp1,"%d %f %f\n",t,a,b);
+	fprintf(fp1,"%f %f\n",y2,y1);*/
 	u[0]=0; 
 	u[n-1]=0;	
 	for (int i=1;i<n-1;i++) // начальные условия
@@ -40,7 +40,7 @@ int main(void)
 //		fprintf(fp1,"%f ",u[i]); // записываем u(0) в файл
 		//fprintf(fp1,"%f ",x[i]); // записываем u(0) в файл
 	}
-	fprintf(fp1,"\n");
+	//fprintf(fp1,"\n");
 	for (int i=1;i<n-1;i++){ // начальные условия
 		fprintf(fp1,"%f ",u[i]); // записываем u(0) в файл
 	}

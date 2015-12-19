@@ -1,13 +1,13 @@
 #include "CUDA.cuh"
  
- int flag = 0; // если в flag, хоть один поток, запишет 1 => разность между x1 и х2 > eps
- int iteration = 1;						// подсчет итераций нужных для нахождения решения     
+ int flag = 0;               // если в flag, хоть один поток, запишет 1 => разность между x1 и х2 > eps
+ int iteration = 1;			 // подсчет итераций нужных для нахождения решения     
 
  __global__ int methodJacobi(crsMatrix A, double* x1, double* x2, double *b, double eps,double diag) // eps - точность вычислений, до которых выполняет метод
 	{
 		
 		double * Multip = A.Multiplicate(x1);	// умножаем матрицу А на вектор х1
-		for ( int i=0; i<N; i++)
+		for ( int i = 0; i<N; i++)
 		{
 			x2[i] = x1[i] - (Multip[i] - b[i])/diag;
 		}
